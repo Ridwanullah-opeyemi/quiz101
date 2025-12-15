@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>COS 101 Quiz: Introduction to Computers</title>
+    <style>
+        /* --- CSS STYLING --- */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f9;
+            color: #333;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+        }
+
+        .container {
+            background-color: #ffffff;
+            margin: 30px 15px;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            width: 100%;
+        }
+
+        h1 {
+            color: #1a73e8;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 2em;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        #question-text {
+            font-size: 1.3em;
+            margin-bottom: 20px;
+            font-weight: 600;
+            color: #444;
+            padding: 10px;
+            border-left: 5px solid #1a73e8;
+            background-color: #f0f8ff;
+            border-radius: 4px;
+        }
+
+        #options-container {
+            display: grid;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .option {
+            background-color: #e9f0f9;
+            padding: 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.2s, box-shadow 0.2s;
+            border: 1px solid #c8d9e8;
+            font-size: 1em;
+        }
+
+        .option:hover:not(.disabled) {
+            background-color: #dbe4ef;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .option.selected:not(.disabled) {
+            border-color: #1a73e8;
+            background-color: #dbe4ef;
+        }
+
+        .option.correct {
+            background-color: #d4edda;
+            border-color: #28a745;
+            color: #155724;
+            font-weight: bold;
+        }
+
+        .option.incorrect {
+            background-color: #f8d7da;
+            border-color: #dc3545;
+            color: #721c24;
+            font-weight: bold;
+        }
+
+        .option.disabled {
+            pointer-events: none;
+            opacity: 0.8;
+        }
+
+        #feedback {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            background-color: #fff3cd;
+            border: 1px solid #ffeeba;
+            color: #856404;
+            font-size: 1em;
+        }
+        
+        #feedback strong {
+            color: #1a73e8;
+        }
+
+        .rationale {
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px dashed #ccc;
+        }
+
+        .hint {
+            margin-top: 8px;
+            font-style: italic;
+            font-size: 0.9em;
+            color: #555;
+        }
+
+        button {
+            padding: 12px 25px;
+            font-size: 1.1em;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 20px;
+            width: 100%;
+        }
+
+        #next-button {
+            background-color: #1a73e8;
+            color: white;
+        }
+
+        #next-button:disabled {
+            background-color: #a8c8e8;
+            cursor: not-allowed;
+        }
+
+        #next-button:hover:not(:disabled) {
+            background-color: #0d47a1;
+        }
+
+        #results-area {
+            text-align: center;
+        }
+
+        #score-text {
+            font-size: 1.8em;
+            margin: 30px 0;
+            color: #28a745;
+        }
+
+        #review-button {
+            background-color: #6c757d;
+            color: white;
+            margin-bottom: 10px;
+        }
+
+        #review-button:hover {
+            background-color: #5a6268;
+        }
+
+        #review-area {
+            display: none;
+            margin-top: 20px;
+        }
+
+        .review-item {
+            border: 1px solid #ccc;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+
+        .review-item h3 {
+            color: #1a73e8;
+            border-bottom: 1px solid #e0e0e0;
+            padding-bottom: 5px;
+            margin-top: 0;
+        }
+
+        .review-item .question-text {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .review-item .user-answer.correct {
+            color: #28a745;
+        }
+
+        .review-item .user-answer.incorrect {
+            color: #dc3545;
+        }
+
+        .review-item .correct-answer {
+            color: #155724;
+            font-weight: 500;
+        }
+
+        .review-item .rationale, .review-item .hint {
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>COS 101 Examination Practice</h1>
+        <p class="subtitle">Computer Fundamentals, Software, Networks, and Internet (40 Questions)</p>
+
+        <div id="quiz-area">
+            <p id="question-text">Question will appear here...</p>
+            <div id="options-container">
+                </div>
+            <div id="feedback">
+                </div>
+            <button id="next-button" disabled onclick="nextQuestion()">Next Question</button>
+        </div>
+
+        <div id="results-area" style="display: none;">
+            <h2>Quiz Complete!</h2>
+            <p id="score-text"></p>
+            <button id="review-button" onclick="reviewResults()">Review Answers</button>
+            <button onclick="window.location.reload()">Restart Quiz</button>
+        </div>
+
+        <div id="review-area">
+            <h2>Answer Review</h2>
+            <div id="review-content">
+                </div>
+            <button onclick="window.location.reload()">Restart Quiz</button>
+        </div>
+    </div>
+
+    <script>
+        // --- QUIZ DATA: 40 Questions Array for COS 101 ---
+        const quizQuestions = [
+            // --- TOPIC I: COMPUTER FUNDAMENTALS (Q1-Q10) ---
+            {
+                "questionNumber": 1,
+                "question": "What is the final step in the Information Processing Cycle, which involves saving the results for future use?",
+                "answerOptions": [
+                    {"text": "Output", "rationale": "Output is producing the result, not saving it.", "isCorrect": false},
+                    {"text": "Process", "rationale": "Process is the manipulation of data.", "isCorrect": false},
+                    {"text": "Input", "rationale": "Input is entering data into the system.", "isCorrect": false},
+                    {"text": "Storage", "rationale": "The Information Process Cycle includes Input, Process, Output, and Storage.", "isCorrect": true}
+                ],
+                "hint": "This step keeps the information available after the computer is turned off."
+            },
+            {
+                "questionNumber": 2,
+                "question": "What is defined as 'raw facts, figures, events, and transactions' that have not yet been processed?",
+                "answerOptions": [
+                    {"text": "Information", "rationale": "Information is processed data.", "isCorrect": false},
+                    {"text": "Process", "rationale": "Process is the action of manipulating data.", "isCorrect": false},
+                    {"text": "Output", "rationale": "Output is the result of the process.", "isCorrect": false},
+                    {"text": "Data", "rationale": "Data is the raw material for the information process cycle.", "isCorrect": true}
+                ],
+                "hint": "This is the 'input' component of the cycle."
+            },
+            {
+                "questionNumber": 3,
+                "question": "Which of the following is a physical, tangible part of the computer system, classifying it as **hardware**?",
+                "answerOptions": [
+                    {"text": "Operating System", "rationale": "This is systems software.", "isCorrect": false},
+                    {"text": "MS Word", "rationale": "This is application software.", "isCorrect": false},
+                    {"text": "Compiler", "rationale": "This is language translator software.", "isCorrect": false},
+                    {"text": "Keyboard", "rationale": "A keyboard is a physical input device (hardware).", "isCorrect": true}
+                ],
+                "hint": "You can physically touch and see this component."
+            },
+            {
+                "questionNumber": 4,
+                "question": "Which term describes the set of non-tangible instructions (programs) that guides the hardware through its job?",
+                "answerOptions": [
+                    {"text": "Firmware", "rationale": "Firmware is a specialized type of software embedded in hardware.", "isCorrect": false},
+                    {"text": "Hardware", "rationale": "Hardware is the physical machine.", "isCorrect": false},
+                    {"text": "Registers", "rationale": "Registers are tiny memory cells in the CPU.", "isCorrect": false},
+                    {"text": "Software", "rationale": "Software is the set of instructions that makes the computer functional.", "isCorrect": true}
+                ],
+                "hint": "This is the opposite of hardware."
+            },
+            {
+                "questionNumber": 5,
+                "question": "What specific part of the CPU is responsible for comparison operations (e.g., less than, equal to, or greater than)?",
+                "answerOptions": [
+                    {"text": "Control Unit (CU)", "rationale": "The CU interprets instructions.", "isCorrect": false},
+                    {"text": "Arithmetic Unit", "rationale": "The Arithmetic Unit performs addition, subtraction, etc.", "isCorrect": false},
+                    {"text": "Register", "rationale": "Registers hold data temporarily.", "isCorrect": false},
+                    {"text": "Logical Unit", "rationale": "The Logical Unit handles comparison (logical) operations.", "isCorrect": true}
+                ],
+                "hint": "The name of the unit refers to the type of operation it performs."
+            },
+            {
+                "questionNumber": 6,
+                "question": "The primary function of the **Control Unit (CU)** is to:",
+                "answerOptions": [
+                    {"text": "Performing arithmetic operations like addition and subtraction.", "rationale": "This is the job of the ALU.", "isCorrect": false},
+                    {"text": "Storing data temporarily for quick access.", "rationale": "This is the job of Registers.", "isCorrect": false},
+                    {"text": "Performing logical comparisons of two numbers.", "rationale": "This is the job of the Logical Unit.", "isCorrect": false},
+                    {"text": "Interpreting instructions and issuing signals that cause other units to execute them.", "isCorrect": true}
+                ],
+                "hint": "It acts like a 'police inspector who controls the traffic'."
+            },
+            {
+                "questionNumber": 7,
+                "question": "Which type of computer input includes instructions in the form of **Programs, Commands, and User Response**?",
+                "answerOptions": [
+                    {"text": "Audio", "rationale": "Audio is media data.", "isCorrect": false},
+                    {"text": "Video", "rationale": "Video is media data.", "isCorrect": false},
+                    {"text": "Graphics and Animations", "rationale": "These are media data.", "isCorrect": false},
+                    {"text": "Instructions", "rationale": "Instructions are categorized into Programs, Commands, and User Response.", "isCorrect": true}
+                ],
+                "hint": "These inputs tell the computer *what* to do."
+            },
+            {
+                "questionNumber": 8,
+                "question": "Which of the following best defines **Information** in the context of computing?",
+                "answerOptions": [
+                    {"text": "Raw facts, figures, events, and transactions.", "rationale": "This is the definition of Data.", "isCorrect": false},
+                    {"text": "Any input entered into the computer.", "rationale": "This is the definition of Input.", "isCorrect": false},
+                    {"text": "Meaningful data or processed data.", "rationale": "Information is the output of the processing stage.", "isCorrect": true},
+                    {"text": "An electronic device that takes input and produces output.", "rationale": "This is the definition of a Computer.", "isCorrect": false}
+                ],
+                "hint": "Information is the result of converting data into a usable form."
+            },
+            {
+                "questionNumber": 9,
+                "question": "A **Command** causes a program to perform a specific action, such as using **Ctrl+S** in MS Word. This is an example of what type of computer input?",
+                "answerOptions": [
+                    {"text": "Program", "rationale": "A Program is a set of instructions.", "isCorrect": false},
+                    {"text": "User Response", "rationale": "A User Response answers a question (Yes/No).", "isCorrect": false},
+                    {"text": "Data", "rationale": "This is not raw data, but an instruction.", "isCorrect": false},
+                    {"text": "Command", "rationale": "Commands are keyboard shortcuts or text-based instructions.", "isCorrect": true}
+                ],
+                "hint": "This is one of the three types of 'Instructions' input."
+            },
+            {
+                "questionNumber": 10,
+                "question": "What is the collective term for the physical, tangible parts of the computer system?",
+                "answerOptions": [
+                    {"text": "Software", "rationale": "Software is non-tangible instructions.", "isCorrect": false},
+                    {"text": "Data", "rationale": "Data is raw facts.", "isCorrect": false},
+                    {"text": "Information", "rationale": "Information is processed data.", "isCorrect": false},
+                    {"text": "Hardware", "rationale": "Hardware includes devices like the keyboard, monitor, and CPU.", "isCorrect": true}
+                ],
+                "hint": "The components you can physically interact with."
+            },
+
+            // --- TOPIC II: COMPONENTS & MEMORY (Q11-Q20) ---
+            {
+                "questionNumber": 11,
+                "question": "Which type of memory is used to store programs and data currently in use, but loses its contents when the computer is turned off (Volatile Memory)?",
+                "answerOptions": [
+                    {"text": "ROM (Read-Only Memory)", "rationale": "ROM is typically non-volatile.", "isCorrect": false},
+                    {"text": "Hard Disk Drive", "rationale": "This is non-volatile backing store.", "isCorrect": false},
+                    {"text": "Registers", "rationale": "Registers are temporary memory within the CPU.", "isCorrect": false},
+                    {"text": "RAM (Random Access Memory)", "rationale": "RAM is the primary volatile working memory.", "isCorrect": true}
+                ],
+                "hint": "The acronym for this memory type is R.A.M."
+            },
+            {
+                "questionNumber": 12,
+                "question": "Which component is NOT one of the three main subdivisions of the Central Processing Unit (CPU)?",
+                "answerOptions": [
+                    {"text": "Arithmetic and Logical Unit (ALU)", "rationale": "ALU is a subdivision of the CPU.", "isCorrect": false},
+                    {"text": "Control Unit (CU)", "rationale": "CU is a subdivision of the CPU.", "isCorrect": false},
+                    {"text": "Registers", "rationale": "Registers are small memory cells inside the CPU.", "isCorrect": false},
+                    {"text": "RAM (Random Access Memory)", "rationale": "RAM is the main system memory, separate from the CPU's internal structure.", "isCorrect": true}
+                ],
+                "hint": "The other three are the brain's internal components."
+            },
+            {
+                "questionNumber": 13,
+                "question": "Which generation of computers (1940-1956) was characterized by the use of **Vacuum Tubes**?",
+                "answerOptions": [
+                    {"text": "Second Generation", "rationale": "Used Transistors.", "isCorrect": false},
+                    {"text": "Third Generation", "rationale": "Used Integrated Circuits.", "isCorrect": false},
+                    {"text": "Fourth Generation", "rationale": "Used Microprocessors.", "isCorrect": false},
+                    {"text": "First Generation", "rationale": "The first generation used vacuum tubes for circuitry.", "isCorrect": true}
+                ],
+                "hint": "This was the earliest technology."
+            },
+            {
+                "questionNumber": 14,
+                "question": "The use of **Transistors** replaced vacuum tubes and defined which generation of computers (1956-1963)?",
+                "answerOptions": [
+                    {"text": "First Generation", "rationale": "Used Vacuum Tubes.", "isCorrect": false},
+                    {"text": "Third Generation", "rationale": "Used Integrated Circuits.", "isCorrect": false},
+                    {"text": "Fourth Generation", "rationale": "Used Microprocessors.", "isCorrect": false},
+                    {"text": "Second Generation", "rationale": "The second generation used transistors, making computers smaller and faster.", "isCorrect": true}
+                ],
+                "hint": "The second major technological shift."
+            },
+            {
+                "questionNumber": 15,
+                "question": "Which type of RAM (Random Access Memory) is faster and less volatile than DRAM but is typically more expensive and requires more power?",
+                "answerOptions": [
+                    {"text": "ROM", "rationale": "ROM is not RAM.", "isCorrect": false},
+                    {"text": "Cache Memory", "rationale": "Cache is a memory type, but not the specific RAM type requested.", "isCorrect": false},
+                    {"text": "DRAM (Dynamic RAM)", "rationale": "DRAM is slower and must be constantly refreshed.", "isCorrect": false},
+                    {"text": "SRAM (Static RAM)", "rationale": "SRAM does not need refreshing and is faster.", "isCorrect": true}
+                ],
+                "hint": "The 'S' stands for 'Static'."
+            },
+            {
+                "questionNumber": 16,
+                "question": "The **Microprocessor** and the technology of LSI (Large Scale Integration) are defining features of the:",
+                "answerOptions": [
+                    {"text": "Second Generation", "rationale": "Used Transistors.", "isCorrect": false},
+                    {"text": "Third Generation", "rationale": "Used Integrated Circuits.", "isCorrect": false},
+                    {"text": "Fifth Generation", "rationale": "Defined by AI.", "isCorrect": false},
+                    {"text": "Fourth Generation", "rationale": "The invention of the microprocessor on a single chip began the fourth generation.", "isCorrect": true}
+                ],
+                "hint": "This is the generation that is still widely used in modern computer architectures."
+            },
+            {
+                "questionNumber": 17,
+                "question": "The memory cells inside the processor used to carry data **temporarily** for performing operations are known as:",
+                "answerOptions": [
+                    {"text": "RAM", "rationale": "RAM is external main memory.", "isCorrect": false},
+                    {"text": "ROM", "rationale": "ROM is non-volatile.", "isCorrect": false},
+                    {"text": "Hard Disk", "rationale": "This is external secondary storage.", "isCorrect": false},
+                    {"text": "Registers", "rationale": "Registers are the fastest and most temporary storage within the CPU.", "isCorrect": true}
+                ],
+                "hint": "The CPU uses these to hold data that the ALU is actively working on."
+            },
+            {
+                "questionNumber": 18,
+                "question": "A **Laptop/Notebook** computer is defined as a personal computer designed primarily for:",
+                "answerOptions": [
+                    {"text": "High-performance graphics processing.", "rationale": "This is a characteristic of workstations.", "isCorrect": false},
+                    {"text": "Hosting large multi-user systems.", "rationale": "This is a characteristic of mainframes/servers.", "isCorrect": false},
+                    {"text": "Use in large organizational networks.", "rationale": "This is a characteristic of mainframes/minicomputers.", "isCorrect": false},
+                    {"text": "Mobile use, small and light enough to sit on a person's lap.", "rationale": "This is the core definition of a laptop.", "isCorrect": true}
+                ],
+                "hint": "The key word here is 'mobile'."
+            },
+            {
+                "questionNumber": 19,
+                "question": "Which technological advancement characterizes the **Third Generation** (1964-1971) of computers?",
+                "answerOptions": [
+                    {"text": "Vacuum Tubes", "rationale": "First Generation.", "isCorrect": false},
+                    {"text": "Microprocessors", "rationale": "Fourth Generation.", "isCorrect": false},
+                    {"text": "Transistors", "rationale": "Second Generation.", "isCorrect": false},
+                    {"text": "Integrated Circuits (ICs)", "rationale": "ICs replaced transistors in the third generation.", "isCorrect": true}
+                ],
+                "hint": "This invention allowed for the miniaturization of multiple transistors onto a single chip."
+            },
+            {
+                "questionNumber": 20,
+                "question": "The use of **Artificial Intelligence (AI)**, natural language processing, and parallel processing is associated with which generation of computers?",
+                "answerOptions": [
+                    {"text": "Third Generation", "rationale": "Used Integrated Circuits.", "isCorrect": false},
+                    {"text": "Fourth Generation", "rationale": "Used Microprocessors.", "isCorrect": false},
+                    {"text": "First Generation", "rationale": "Used Vacuum Tubes.", "isCorrect": false},
+                    {"text": "Fifth Generation", "rationale": "AI is the focus of current and future computer development.", "isCorrect": true}
+                ],
+                "hint": "This is the 'present and beyond' generation."
+            },
+
+            // --- TOPIC III: SOFTWARE AND PROGRAMMING (Q21-Q30) ---
+            {
+                "questionNumber": 21,
+                "question": "Which category of software is responsible for tasks such as **Managing communications between software and hardware** and **Allocating computer memory**?",
+                "answerOptions": [
+                    {"text": "Applications Software", "rationale": "Applications perform user tasks (e.g., word processing).", "isCorrect": false},
+                    {"text": "Packaged Software", "rationale": "This is a type of Application Software.", "isCorrect": false},
+                    {"text": "Custom Software", "rationale": "This is a type of Application Software.", "isCorrect": false},
+                    {"text": "Systems Software", "rationale": "Systems software, particularly the OS, controls the computer's core operations.", "isCorrect": true}
+                ],
+                "hint": "The Operating System belongs to this category."
+            },
+            {
+                "questionNumber": 22,
+                "question": "The software written to carry out specific user tasks, like a program for creating spreadsheets or designing graphics, is known as:",
+                "answerOptions": [
+                    {"text": "Systems software", "rationale": "System software manages the computer's operation.", "isCorrect": false},
+                    {"text": "Language Translators", "rationale": "These are system software.", "isCorrect": false},
+                    {"text": "Utility Programs", "rationale": "These are system software.", "isCorrect": false},
+                    {"text": "Applications Software", "rationale": "Applications perform the tasks the user wants to accomplish.", "isCorrect": true}
+                ],
+                "hint": "This software is for a specific 'application' or purpose."
+            },
+            {
+                "questionNumber": 23,
+                "question": "Which of the following is explicitly listed as an example of **Systems Software**?",
+                "answerOptions": [
+                    {"text": "MS Office", "rationale": "Application software.", "isCorrect": false},
+                    {"text": "Adobe Photoshop", "rationale": "Application software.", "isCorrect": false},
+                    {"text": "Web Browser", "rationale": "Application software.", "isCorrect": false},
+                    {"text": "Language Translators", "rationale": "Translators (Compilers/Interpreters) are vital for running code, hence system software.", "isCorrect": true}
+                ],
+                "hint": "This software is a communication bridge for programming."
+            },
+            {
+                "questionNumber": 24,
+                "question": "A piece of software designed for a **specific user or group of users within an organization** and **not packaged for resale** is called:",
+                "answerOptions": [
+                    {"text": "Packaged software", "rationale": "Packaged software is commercial and sold to the general public.", "isCorrect": false},
+                    {"text": "System software", "rationale": "System software is general-purpose.", "isCorrect": false},
+                    {"text": "Utility software", "rationale": "Utility software performs maintenance tasks.", "isCorrect": false},
+                    {"text": "Custom software", "rationale": "It is tailor-made for specific needs.", "isCorrect": true}
+                ],
+                "hint": "It is sometimes called 'bespoke' software."
+            },
+            {
+                "questionNumber": 25,
+                "question": "What is the best example of **Packaged Software** mentioned, which is a compilation of programs grouped together to provide different tools?",
+                "answerOptions": [
+                    {"text": "Windows Operating System", "rationale": "This is System Software.", "isCorrect": false},
+                    {"text": "C++ Compiler", "rationale": "This is System Software.", "isCorrect": false},
+                    {"text": "MS Paint", "rationale": "A single application.", "isCorrect": false},
+                    {"text": "Microsoft Office (Word, Excel, PowerPoint)", "rationale": "This is a commercial suite of application programs.", "isCorrect": true}
+                ],
+                "hint": "This is a widely used suite of productivity applications."
+            },
+            {
+                "questionNumber": 26,
+                "question": "Without which component would the hardware that is used to build a computer system not be very useful?",
+                "answerOptions": [
+                    {"text": "Input Devices", "rationale": "The system can still function without new input.", "isCorrect": false},
+                    {"text": "Output Devices", "rationale": "The system can still process without output.", "isCorrect": false},
+                    {"text": "The CPU", "rationale": "The CPU is hardware itself.", "isCorrect": false},
+                    {"text": "Software", "rationale": "Software provides the instructions for the hardware.", "isCorrect": true}
+                ],
+                "hint": "This component contains the instructions the computer must follow."
+            },
+            {
+                "questionNumber": 27,
+                "question": "A **Utility Program** falls under the category of Systems Software. What is its main purpose?",
+                "answerOptions": [
+                    {"text": "To write code using syntax close to human languages.", "rationale": "This describes a High-Level Language.", "isCorrect": false},
+                    {"text": "To carry out specific tasks for the end-user (e.g. typing a document).", "rationale": "This describes Application Software.", "isCorrect": false},
+                    {"text": "To translate code from a high-level language to machine code.", "rationale": "This describes a Language Translator.", "isCorrect": false},
+                    {"text": "To perform maintenance and organizational tasks (e.g. disk defragmentation, antivirus).", "isCorrect": true}
+                ],
+                "hint": "These programs assist in the management and optimization of the computer system."
+            },
+            {
+                "questionNumber": 28,
+                "question": "What defines a **High-Level Programming Language**?",
+                "answerOptions": [
+                    {"text": "It uses machine code that the CPU executes directly.", "rationale": "This describes a Low-Level Language.", "isCorrect": false},
+                    {"text": "It is a language for communication with hardware only.", "isCorrect": false},
+                    {"text": "It requires no translation to be executed by the computer.", "isCorrect": false},
+                    {"text": "It uses syntax close to human languages, making it easy to understand and use.", "isCorrect": true}
+                ],
+                "hint": "Examples include C++, Java, and Python."
+            },
+            {
+                "questionNumber": 29,
+                "question": "When a computer program is a set of instructions to solve a particular **Problem**, this refers to the fundamental role of:",
+                "answerOptions": [
+                    {"text": "Hardware", "rationale": "Hardware executes the solution.", "isCorrect": false},
+                    {"text": "The Register", "rationale": "The Register stores temporary data.", "isCorrect": false},
+                    {"text": "The ALU", "rationale": "The ALU performs calculations.", "isCorrect": false},
+                    {"text": "Software", "rationale": "Software is the set of instructions (program) designed to solve the problem.", "isCorrect": true}
+                ],
+                "hint": "A computer program is a set of instructions to solve a particular..."
+            },
+            {
+                "questionNumber": 30,
+                "question": "An **Operating System** performs all of the following vital tasks EXCEPT:",
+                "answerOptions": [
+                    {"text": "Allocating CPU time to other software programs.", "rationale": "It is a task of the OS.", "isCorrect": false},
+                    {"text": "Managing communications between software and hardware.", "rationale": "It is a task of the OS.", "isCorrect": false},
+                    {"text": "Allocating computer memory to other software programs.", "rationale": "It is a task of the OS.", "isCorrect": false},
+                    {"text": "Writing custom software for organizational needs.", "rationale": "This is the job of Custom Application Software developers.", "isCorrect": true}
+                ],
+                "hint": "The OS is system software, not application software."
+            },
+
+            // --- TOPIC IV: NETWORKS & TOPOLOGIES (Q31-Q35) ---
+            {
+                "questionNumber": 31,
+                "question": "A computer network located entirely on one site, such as an office or a university campus, is best classified as a:",
+                "answerOptions": [
+                    {"text": "WAN (Wide Area Network)", "rationale": "WAN connects sites in different areas.", "isCorrect": false},
+                    {"text": "MAN (Metropolitan Area Network)", "rationale": "MAN covers a city or town.", "isCorrect": false},
+                    {"text": "PAN (Personal Area Network)", "rationale": "PAN is for personal devices (e.g., Bluetooth).", "isCorrect": false},
+                    {"text": "LAN (Local Area Network)", "rationale": "LANs are confined to a single site or close proximity of buildings.", "isCorrect": true}
+                ],
+                "hint": "The term relates to a 'local' area."
+            },
+            {
+                "questionNumber": 32,
+                "question": "Which network topology features a central hub or switch to which all individual nodes are directly connected?",
+                "answerOptions": [
+                    {"text": "Bus Topology", "rationale": "Bus uses a single backbone cable.", "isCorrect": false},
+                    {"text": "Ring Topology", "rationale": "Ring connects nodes in a closed loop.", "isCorrect": false},
+                    {"text": "Mesh Topology", "rationale": "Mesh connects every node to every other node.", "isCorrect": false},
+                    {"text": "Star Topology", "rationale": "The star relies on a central connection point.", "isCorrect": true}
+                ],
+                "hint": "Failure of the central device disables the entire network."
+            },
+            {
+                "questionNumber": 33,
+                "question": "Which topology's key characteristic is that all computers are connected to a single main cable or backbone?",
+                "answerOptions": [
+                    {"text": "Star Topology", "rationale": "Uses a central hub.", "isCorrect": false},
+                    {"text": "Ring Topology", "rationale": "Uses a closed loop.", "isCorrect": false},
+                    {"text": "Mesh Topology", "rationale": "Uses point-to-point links.", "isCorrect": false},
+                    {"text": "Bus Topology", "rationale": "The bus is the single transmission line.", "isCorrect": true}
+                ],
+                "hint": "The network line is often called the 'backbone'."
+            },
+            {
+                "questionNumber": 34,
+                "question": "A network that connects widely dispersed computers, potentially across a country or even across the world, is defined as a:",
+                "answerOptions": [
+                    {"text": "Local Area Network (LAN)", "rationale": "LAN is confined to one site.", "isCorrect": false},
+                    {"text": "Personal Area Network (PAN)", "rationale": "PAN is for personal devices.", "isCorrect": false},
+                    {"text": "Storage Area Network (SAN)", "rationale": "SAN is for storage devices.", "isCorrect": false},
+                    {"text": "Wide Area Network (WAN)", "rationale": "WAN spans large geographical areas.", "isCorrect": true}
+                ],
+                "hint": "The term relates to a 'wide' area."
+            },
+            {
+                "questionNumber": 35,
+                "question": "Which network topology offers the highest level of redundancy by developing a P2P (point-to-point) connection between **every** device on the network?",
+                "answerOptions": [
+                    {"text": "Star Topology", "rationale": "Uses a central hub.", "isCorrect": false},
+                    {"text": "Ring Topology", "rationale": "Uses a closed loop.", "isCorrect": false},
+                    {"text": "Bus Topology", "rationale": "Uses a single backbone cable.", "isCorrect": false},
+                    {"text": "Mesh Topology", "rationale": "Full mesh provides dedicated links between all pairs of devices.", "isCorrect": true}
+                ],
+                "hint": "This topology is expensive due to the large number of cables required."
+            },
+
+            // --- TOPIC V: THE INTERNET (Q36-Q40) ---
+            {
+                "questionNumber": 36,
+                "question": "The Internet is defined as a global system of interconnected computer networks that communicate with each other using standardized protocols, primarily known as the:",
+                "answerOptions": [
+                    {"text": "HTML Protocol Suite", "rationale": "HTML is a markup language.", "isCorrect": false},
+                    {"text": "DNS Protocol Suite", "rationale": "DNS is a system for translating names to addresses.", "isCorrect": false},
+                    {"text": "URL Protocol Suite", "rationale": "URL is a naming convention.", "isCorrect": false},
+                    {"text": "Internet Protocol Suite (TCP/IP)", "rationale": "TCP/IP is the foundational set of rules for internet communication.", "isCorrect": true}
+                ],
+                "hint": "The two main components of this suite are Transmission Control Protocol and Internet Protocol."
+            },
+            {
+                "questionNumber": 37,
+                "question": "Which term describes a unique numerical label assigned to each device connected to the Internet, serving as its address?",
+                "answerOptions": [
+                    {"text": "URL", "rationale": "URL is a textual web address.", "isCorrect": false},
+                    {"text": "DNS", "rationale": "DNS translates addresses.", "isCorrect": false},
+                    {"text": "HTTP", "rationale": "HTTP is a data transfer protocol.", "isCorrect": false},
+                    {"text": "IP Address", "rationale": "The IP address is the unique numerical identifier.", "isCorrect": true}
+                ],
+                "hint": "The 'IP' stands for 'Internet Protocol'."
+            },
+            {
+                "questionNumber": 38,
+                "question": "The **Domain Name System (DNS)** is responsible for what critical internet function?",
+                "answerOptions": [
+                    {"text": "Creating the visual layout of web pages.", "rationale": "This is the job of HTML/CSS.", "isCorrect": false},
+                    {"text": "Encrypting data transmission between a server and browser.", "rationale": "This is the job of HTTPS.", "isCorrect": false},
+                    {"text": "Storing and accessing data, applications, and computing resources remotely.", "rationale": "This is Cloud Computing.", "isCorrect": false},
+                    {"text": "Translating domain names (like google.com) into IP addresses.", "rationale": "DNS acts as the phonebook for the internet.", "isCorrect": true}
+                ],
+                "hint": "It resolves human-readable names into machine-readable addresses."
+            },
+            {
+                "questionNumber": 39,
+                "question": "Which protocol is the **secure, encrypted** version of the Hypertext Transfer Protocol, ensuring confidential data transmission?",
+                "answerOptions": [
+                    {"text": "FTP", "rationale": "File Transfer Protocol.", "isCorrect": false},
+                    {"text": "HTTP", "rationale": "This is the non-secure version.", "isCorrect": false},
+                    {"text": "DNS", "rationale": "Domain Name System.", "isCorrect": false},
+                    {"text": "HTTPS", "rationale": "The 'S' stands for Secure.", "isCorrect": true}
+                ],
+                "hint": "Look for the extra letter added to the standard protocol name."
+            },
+            {
+                "questionNumber": 40,
+                "question": "A **Search Engine** is best described as:",
+                "answerOptions": [
+                    {"text": "A global system of interconnected networks.", "rationale": "This is the Internet.", "isCorrect": false},
+                    {"text": "A software application used to access and view websites.", "rationale": "This is a Web Browser.", "isCorrect": false},
+                    {"text": "The web address used to locate a specific resource.", "rationale": "This is a URL.", "isCorrect": false},
+                    {"text": "A powerful tool for finding information on the web by entering search queries.", "rationale": "Search engines index the web for retrieval.", "isCorrect": true}
+                ],
+                "hint": "Examples include Google and Bing."
+            }
+        ];
+
+        // --- QUIZ LOGIC FUNCTIONS ---
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let answered = false;
+        let userAnswers = [];
+        
+        /**
+         * Loads and displays the current question and its options.
+         */
+        function loadQuestion() {
+            if (currentQuestionIndex >= quizQuestions.length) {
+                showResults();
+                return;
+            }
+
+            answered = false;
+            const questionData = quizQuestions[currentQuestionIndex];
+            const questionTextElement = document.getElementById('question-text');
+            const optionsContainer = document.getElementById('options-container');
+            const nextButton = document.getElementById('next-button');
+            const feedbackElement = document.getElementById('feedback');
+
+            // Reset elements
+            optionsContainer.innerHTML = '';
+            feedbackElement.innerHTML = '';
+            nextButton.disabled = true;
+            nextButton.textContent = 'Next Question';
+
+            // Update question text
+            questionTextElement.innerHTML = `Q${currentQuestionIndex + 1}/${quizQuestions.length}: ${questionData.question}`;
+
+            // Create answer options
+            questionData.answerOptions.forEach((option, index) => {
+                const optionElement = document.createElement('div');
+                optionElement.classList.add('option');
+                optionElement.setAttribute('data-index', index);
+                optionElement.innerHTML = option.text;
+
+                // Attach click listener
+                optionElement.onclick = () => {
+                    if (!answered) {
+                        checkAnswer(optionElement, index, questionData);
+                    }
+                };
+
+                optionsContainer.appendChild(optionElement);
+            });
+        }
+
+        /**
+         * Checks the selected answer, updates the score, and displays feedback.
+         */
+        function checkAnswer(selectedElement, selectedIndex, questionData) {
+            answered = true;
+            const options = document.querySelectorAll('.option');
+            const nextButton = document.getElementById('next-button');
+            const feedbackElement = document.getElementById('feedback');
+
+            // Disable all options after selection
+            options.forEach(option => {
+                option.classList.add('disabled');
+            });
+
+            const isCorrect = questionData.answerOptions[selectedIndex].isCorrect;
+            const correctAnswer = questionData.answerOptions.find(opt => opt.isCorrect);
+
+            // Record the user's answer
+            userAnswers.push({
+                question: questionData.question,
+                userSelection: selectedElement.textContent,
+                isCorrect: isCorrect,
+                correctAnswer: correctAnswer.text,
+                rationale: correctAnswer.rationale,
+                hint: questionData.hint
+            });
+
+            if (isCorrect) {
+                score++;
+                selectedElement.classList.add('correct');
+                feedbackElement.innerHTML = '<span style="color: green;">Correct!</span>';
+            } else {
+                selectedElement.classList.add('incorrect');
+                feedbackElement.innerHTML = '<span style="color: red;">Incorrect.</span>';
+
+                // Highlight the correct answer
+                options.forEach(option => {
+                    if (questionData.answerOptions[option.getAttribute('data-index')].isCorrect) {
+                        option.classList.add('correct');
+                    }
+                });
+            }
+
+            // Display Rationale and Hint
+            feedbackElement.innerHTML += `
+                <div class="rationale">
+                    <strong>Rationale:</strong> ${correctAnswer.rationale}
+                    <div class="hint">Hint: ${questionData.hint}</div>
+                </div>
+            `;
+
+            nextButton.disabled = false;
+        }
+
+        /**
+         * Advances the quiz to the next question.
+         */
+        function nextQuestion() {
+            currentQuestionIndex++;
+            loadQuestion();
+        }
+
+        /**
+         * Displays the final results screen.
+         */
+        function showResults() {
+            document.getElementById('quiz-area').style.display = 'none';
+            document.getElementById('results-area').style.display = 'block';
+
+            const scoreText = document.getElementById('score-text');
+            const percentage = ((score / quizQuestions.length) * 100).toFixed(1);
+
+            scoreText.innerHTML = `You scored <strong>${score}</strong> out of ${quizQuestions.length} (${percentage}%)`;
+        }
+
+        /**
+         * Generates and displays the answer review area.
+         */
+        function reviewResults() {
+            document.getElementById('results-area').style.display = 'none';
+            document.getElementById('review-area').style.display = 'block';
+            const reviewContent = document.getElementById('review-content');
+            reviewContent.innerHTML = '';
+
+            userAnswers.forEach((answer, index) => {
+                const reviewItem = document.createElement('div');
+                reviewItem.classList.add('review-item');
+
+                const isCorrectClass = answer.isCorrect ? 'correct' : 'incorrect';
+
+                reviewItem.innerHTML = `
+                    <h3>Question ${index + 1}</h3>
+                    <p class="question-text">${answer.question}</p>
+                    <p class="user-answer ${isCorrectClass}"><strong>Your Answer:</strong> ${answer.userSelection}
+                        <span style="font-weight: normal;">${answer.isCorrect ? '(Correct)' : '(Incorrect)'}</span>
+                    </p>
+                    <p class="correct-answer"><strong>Correct Answer:</strong> ${answer.correctAnswer}</p>
+                    <p class="rationale"><strong>Rationale:</strong> ${answer.rationale}</p>
+                    <p class="hint"><strong>Hint:</strong> ${answer.hint}</p>
+                `;
+                reviewContent.appendChild(reviewItem);
+            });
+        }
+
+        // Start the quiz once the script is loaded
+        document.addEventListener('DOMContentLoaded', loadQuestion);
+    </script>
+</body>

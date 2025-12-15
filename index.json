@@ -1,0 +1,136 @@
+[
+  {
+    "section": "Relative Motion and Reference Frames",
+    "questions": [
+      "According to the laws of physics, if a law applies to a body at rest on earth, does it also apply to a reference frame moving at a constant velocity with respect to the earth?",
+      "Is the concept of motion absolute or relative in nature?",
+      "Motion is always defined with respect to what?",
+      "How is a body defined as being in motion?",
+      "How is a body defined as being at rest?",
+      "What is the definition of a reference frame?",
+      "What are the two types of reference frames mentioned?",
+      "In which frame of reference do Newton's laws of motion hold?",
+      "Give an example of an inertial frame of reference.",
+      "What characterizes a non-inertial frame of reference regarding Newton's laws?",
+      "What happens to passengers when a bus goes around a corner in a non-inertial frame?",
+      "Why do physicists argue that the earth is a non-inertial frame?",
+      "Inside a moving train, what is the velocity of sitting passengers relative to the train?",
+      "How does an observer standing on the ground view the passengers in a moving train?",
+      "How do observers at rest in a moving train view a bystander on the ground?"
+    ]
+  },
+  {
+    "section": "Relative Position and Velocity (1D and 2D)",
+    "questions": [
+      "What is the definition of relative position?",
+      "If objects A and B are at positions X_A and X_B, what is the formula for the relative position of B from A (X_BA)?",
+      "What is the definition of relative velocity?",
+      "Given that velocity is the time derivative of displacement, what is the formula for V_BA?",
+      "In Example 2, what is the velocity of the car?",
+      "In Example 2, what is the velocity of the oncoming truck?",
+      "How do you convert 120 km/h to m/s?",
+      "What is the formula for the velocity of approach (V_app) used in Example 2?",
+      "If the preferred direction is that of the car, what is the sign of the truck's velocity in Example 2?",
+      "How do you calculate the time required for vehicles to meet given their separation and velocity of approach?",
+      "In the Self-Assessment Problem, what is the speed of the bus?",
+      "In the Self-Assessment Problem, what is the speed of the ticketer relative to the bus?",
+      "For relative motion in two dimensions, how are position vectors r_A and r_B expressed?",
+      "What is the vector formula for r_AB in two dimensions?",
+      "In Example 3, what are the speeds of objects A and B?",
+      "In Example 3, in which direction does object A move?",
+      "Why must the vector +V_B be flipped to -V_B when solving for V_AB?",
+      "What is the vector expression for V_AB in Example 3?",
+      "How do you calculate the magnitude |V_AB| in Example 3?",
+      "What is the angle theta for V_AB in Example 3?",
+      "In Example 4, what is the speed of the rain falling vertically?",
+      "What is the velocity vector of the rain V_r in Example 4?",
+      "What is the magnitude of the velocity of the rain relative to the man in Example 4?",
+      "What is the angle at which the rain hits the man in Example 4?"
+    ]
+  },
+  {
+    "section": "Newton's Laws and Forces",
+    "questions": [
+      "How is force defined based on its capability?",
+      "What happens if an applied force is balanced by another force?",
+      "What happens to an object if a force acts alone?",
+      "How is the net force acting on an object calculated?",
+      "What is the condition for an object to be in equilibrium?",
+      "What are the two main categories of forces mentioned?",
+      "What is the relationship between the mass of an object and the tendency to change its position?",
+      "Who laid the groundwork for Newton's first law?",
+      "What is the definition of inertia?",
+      "How did Newton relate mass to inertia?",
+      "State Newton's First Law of Motion.",
+      "State Newton's Second Law of Motion.",
+      "What is the mathematical expression for Newton's Second Law involving momentum?",
+      "What is the common formula for Newton's Second Law derived from momentum?",
+      "State Newton's Third Law of Motion.",
+      "Mathematically, how is Newton's Third Law expressed?",
+      "Do action and reaction forces act on the same object?",
+      "Why can't action and reaction forces cancel each other out?",
+      "What are Newton's three laws sometimes collectively called?"
+    ]
+  },
+  {
+    "section": "Applications of Newton's Laws (Dynamics)",
+    "questions": [
+      "In Example 5, what is the mass of the body?",
+      "What is the coefficient of kinetic friction in Example 5?",
+      "In Example 5, what is the net force acting to the left before friction is considered?",
+      "What is the formula for frictional force f?",
+      "In Example 5, what is the value of the Normal reaction R?",
+      "What is the calculated acceleration in Example 5?",
+      "In Example 6, what is the mass of the object being accelerated?",
+      "What is the net horizontal force required in Example 6?",
+      "In the Self-Assessment Problem (Figure 3), what are you asked to find first?"
+    ]
+  },
+  {
+    "section": "Work and Kinetic Energy",
+    "questions": [
+      "What is the work-energy theorem relationship expressed as an integral?",
+      "How is Newton's second law substituted into the work integral?",
+      "What is the derived expression for kinetic energy (K.E.)?",
+      "What is the value of 1/2 m v_0^2 when a body is at rest?",
+      "In Example 7, what is the velocity of the Toyota Camry?",
+      "In Example 7, what is the kinetic energy of the car?",
+      "In Example 7, what is the calculated mass of the car?"
+    ]
+  },
+  {
+    "section": "Potential Energy and Conservation Principles",
+    "questions": [
+      "What is the expression for Work involving height change delta h?",
+      "What force is substituted into the work equation for potential energy derivation?",
+      "What is the formula for potential energy (U) when h_0 = 0?",
+      "What do conservation theorems state about physical quantities?",
+      "How is an isolated system defined?",
+      "State the law of conservation of total energy.",
+      "Can energy be created or destroyed within an isolated system?",
+      "If work done is independent of the object's path, what type of force is it?",
+      "Is gravitational force a conservative force?",
+      "Name three examples of conservative forces besides gravity.",
+      "In Example 8, what is the mass of the monkey?",
+      "What is the change in potential energy in Example 8?",
+      "What is the formula used to solve for height h_2 in Example 8?",
+      "What is the final height calculated in Example 8?",
+      "In the Self-Assessment (Boeing 747), what is the altitude of the flight?"
+    ]
+  },
+  {
+    "section": "Mechanical Energy and Momentum",
+    "questions": [
+      "For a pendulum, where is the potential energy maximum?",
+      "For a pendulum, where is the kinetic energy maximum?",
+      "What is the sum of kinetic and potential energies in a conservative system called?",
+      "Under what condition is the linear momentum of a particle conserved?",
+      "How is force related to the change in momentum delta p?",
+      "State the law of conservation of linear momentum equation.",
+      "In Example 9, what are the masses of balls A and B?",
+      "What is the initial momentum of ball A in Example 9?",
+      "What is the total initial momentum in Example 9?",
+      "In Example 9, if the balls move together, what is the total mass?",
+      "What is the final velocity v_f calculated in Example 9?"
+    ]
+  }

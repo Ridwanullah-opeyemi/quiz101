@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PHY 101 Exam Practice - 80 Questions</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="quiz-container">
+        <h1>PHY 101 Exam Practice</h1>
+        <p class="subtitle">Relative Motion, Dynamics, Energy, and Momentum (80 Questions)</p>
+        
+        <div id="quiz-area">
+            <div id="question-text"></div>
+            <div id="options-container" class="options-grid"></div>
+            <div id="feedback" class="feedback"></div>
+            
+            <div class="controls">
+                <button id="next-button" onclick="nextQuestion()" disabled>Next Question</button>
+            </div>
+        </div>
+
+        <div id="results-area" style="display: none;">
+            <h2>Quiz Results</h2>
+            <p id="score-text"></p>
+            <button onclick="reviewResults()">Review Answers</button>
+            <button onclick="location.reload()">Restart Quiz</button>
+        </div>
+
+        <div id="review-area" style="display: none;">
+            <h2>Answer Review</h2>
+            <div id="review-content"></div>
+            <button onclick="document.getElementById('review-area').style.display='none'; document.getElementById('results-area').style.display='block';">Back to Results</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // Start the quiz once the script is loaded
+        loadQuestion();
+    </script>
+</body>
+</html>
