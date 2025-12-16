@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STA 111: Descriptive Statistics Exam Prep</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f6f9;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+        }
+        .container {
+            background-color: #fff;
+            width: 100%;
+            max-width: 800px;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            text-align: center;
+            color: #7f8c8d;
+            margin-bottom: 30px;
+            font-size: 0.9em;
+        }
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+            font-weight: bold;
+            color: #2980b9;
+        }
+        .question-box {
+            margin-bottom: 25px;
+        }
+        .question-text {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+        .options-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .option-item {
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 5px;
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: background-color 0.2s, border-color 0.2s;
+            display: flex;
+            align-items: center;
+        }
+        .option-item:hover {
+            background-color: #e3f2fd;
+            border-color: #2196f3;
+        }
+        .option-item.selected {
+            background-color: #d4e6f1;
+            border-color: #2980b9;
+            font-weight: bold;
+        }
+        .option-item input[type="radio"] {
+            margin-right: 15px;
+        }
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        button {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: opacity 0.2s;
+        }
+        .btn-prev {
+            background-color: #95a5a6;
+            color: white;
+        }
+        .btn-next {
+            background-color: #2980b9;
+            color: white;
+        }
+        .btn-submit {
+            background-color: #27ae60;
+            color: white;
+        }
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        button:hover:not(:disabled) {
+            opacity: 0.9;
+        }
+        
+        /* Results Section */
+        #result-screen {
+            text-align: center;
+            display: none;
+        }
+        .score-display {
+            font-size: 3em;
+            font-weight: bold;
+            color: #2c3e50;
+            margin: 20px 0;
+        }
+        .review-section {
+            text-align: left;
+            margin-top: 30px;
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid #eee;
+            padding: 15px;
+        }
+        .review-item {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        .correct-answer { color: #27ae60; font-weight: bold; }
+        .wrong-answer { color: #c0392b; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header style="text-align: center;font-size: x-large; "><a href="index.html">HOME</a></header>
+    <div id="quiz-screen">
+        <h1>STA 111 Courseware Quiz</h1>
+        <div class="subtitle">Descriptive Statistics Practice • Al-Hikmah University</div>
+        
+        <div class="quiz-header">
+            <span id="question-counter">Question 1 of 80</span>
+            <span id="timer">Time: 00:00</span>
+        </div>
+
+        <div class="question-box">
+            <div id="question-text" class="question-text">Loading questions...</div>
+            <ul id="options-list" class="options-list">
+                </ul>
+        </div>
+
+        <div class="controls">
+            <button id="btn-prev" class="btn-prev" onclick="prevQuestion()" disabled>Previous</button>
+            <button id="btn-next" class="btn-next" onclick="nextQuestion()">Next</button>
+        </div>
+    </div>
+
+    <div id="result-screen">
+        <h1>Quiz Completed!</h1>
+        <p>Your Score:</p>
+        <div class="score-display" id="final-score">0 / 80</div>
+        <div class="review-section" id="review-container">
+            </div>
+        <br>
+        <button class="btn-next" onclick="restartQuiz()">Restart Quiz (Shuffle Questions)</button>
+    </div>
+</div>
+
+<script>
+    // --- DATABASE OF 80 QUESTIONS FROM PDF ---
+    const questionBank = [
+        // Section 1: Basic Concepts 
+        { q: "Statistics is broadly divided into which two categories?", options: ["Descriptive and Inferential", "Inductive and Deductive", "Primary and Secondary", "Qualitative and Quantitative"], a: 0 },
+        { q: "Which type of statistics involves making deductions and predictions about a population based on a sample?", options: ["Descriptive Statistics", "Inferential Statistics", "Operational Statistics", "Demographic Statistics"], a: 1 },
+        { q: "Which scale of measurement is considered the weakest level?", options: ["Ratio", "Interval", "Ordinal", "Nominal"], a: 3 },
+        { q: "The process of drawing general conclusions from specific cases (sample to population) is called:", options: ["Deductive statistics", "Inductive statistics", "Descriptive statistics", "None of the above"], a: 1 },
+        { q: "A variable that can take any value within an interval of the real line (e.g., height, weight) is called:", options: ["Discrete variable", "Continuous variable", "Nominal variable", "Categorical variable"], a: 1 },
+        { q: "Shoe size and number of missing teeth are examples of:", options: ["Continuous variables", "Qualitative variables", "Discrete variables", "Ratio variables"], a: 2 },
+        { q: "Which scale of measurement has a true zero point?", options: ["Nominal", "Ordinal", "Interval", "Ratio"], a: 3 },
+        { q: "Temperature in degrees Celsius is an example of which scale?", options: ["Nominal", "Ordinal", "Interval", "Ratio"], a: 2 },
+        { q: "Which statistic is best for Nominal data?", options: ["Mean", "Mode", "Median", "Standard Deviation"], a: 1 },
+        { q: "Data collected directly by the researcher from the original source is called:", options: ["Secondary Data", "Primary Data", "Archival Data", "Published Data"], a: 1 },
+        
+        // Section 1 continued & Data Collection 
+        { q: "Which is a disadvantage of primary data?", options: ["It is outdated", "It is costly and time-consuming", "It is not tailored to the study", "It eliminates interviewer bias"], a: 1 },
+        { q: "Data extracted from journals, newspapers, or official compilations is called:", options: ["Primary Data", "Secondary Data", "Raw Data", "Experimental Data"], a: 1 },
+        { q: "Which method of data collection involves applying a treatment to a subject and examining the response?", options: ["Observational Study", "Interview", "Designed Experiment", "Documentation"], a: 2 },
+        { q: "A questionnaire where respondents are restricted to choose from provided options is called:", options: ["Open-ended", "Close-ended", "Unstructured", "Qualitative"], a: 1 },
+        { q: "When designing a questionnaire, which of the following should be avoided?", options: ["Simple language", "Factual questions", "Vague generalizations and technical terms", "Logical ordering"], a: 2 },
+
+        // Section 2: Presentation 
+        { q: "Which axis is typically used for the dependent variable in a graph?", options: ["X-axis", "Y-axis", "The origin", "The Z-axis"], a: 1 },
+        { q: "In a bar graph, the length of the bar is proportional to:", options: ["The width of the item", "The size/frequency of the item", "The cumulative frequency", "The class interval"], a: 1 },
+        { q: "A graph showing the relationship between two quantitative variables (e.g., height vs weight) is called a:", options: ["Bar chart", "Pie chart", "Scatterplot", "Histogram"], a: 2 },
+        { q: "A pie chart consists of a circle divided into segments where the size represents:", options: ["Relative importance/percentage", "Cumulative frequency", "Rate of change", "Standard deviation"], a: 0 },
+        { q: "Which graph is specifically a graph of a frequency distribution using bars with no gaps?", options: ["Bar chart", "Histogram", "Scatterplot", "Pie chart"], a: 1 },
+        { q: "The midpoint of a class interval is called the:", options: ["Class boundary", "Class limit", "Class mark", "Class size"], a: 2 },
+        { q: "The graph obtained by plotting the upper class limits against the cumulative frequency is called:", options: ["Histogram", "Frequency Polygon", "Ogive", "Scattergram"], a: 2 },
+        { q: "In a histogram, the area of the bars represents:", options: ["The class mark", "The frequency", "The range", "The variable name"], a: 1 },
+        { q: "Which chart is best for showing trends over time?", options: ["Pie chart", "Line graph", "Scatterplot", "Component bar chart"], a: 1 },
+        { q: "What is the class boundary of the interval 20-25?", options: ["20.0-25.0", "19.5-25.5", "20.5-24.5", "19.0-26.0"], a: 1 },
+
+        // Section 3: Errors and Approximations 
+        { q: "Rounding 8.9kg to 9kg is an example of:", options: ["Rounding down", "Rounding up", "Truncation", "Significant figures"], a: 1 },
+        { q: "Stating one's age as '19' when they are 19 years and 10 months old is an example of:", options: ["Rounding up", "Rounding down", "Nearest unit", "Percentage error"], a: 1 },
+        { q: "If the first digit to be dropped is less than 5, the preceding digit:", options: ["Increases by one", "Remains unchanged", "Decreases by one", "Becomes zero"], a: 1 },
+        { q: "Which type of error arises due to limitations of measuring instruments or biased informants?", options: ["Error of inadequacy", "Error of manipulation", "Error of origin", "Percentage error"], a: 2 },
+        { q: "Errors caused by a sample size being too small or unrepresentative are called:", options: ["Errors of origin", "Errors of inadequacy", "Errors of manipulation", "Absolute errors"], a: 1 },
+        { q: "The difference between a true value and its approximate/observed value is called:", options: ["Relative Error", "Absolute Error", "Percentage Error", "Standard Error"], a: 1 },
+        { q: "Relative Error is defined as:", options: ["True Value - Observed Value", "Absolute Error / True Value", "Absolute Error x 100", "Observed Value / True Value"], a: 1 },
+        { q: "If the true value is 100 and the observed value is 95, what is the absolute error?", options: ["-5", "5", "0.05", "5%"], a: 1 },
+
+        // Section 4: Central Tendency 
+        { q: "The sum of deviations of values from the Mean is always:", options: ["One", "Negative", "Zero", "Infinite"], a: 2 },
+        { q: "Which measure of location corresponds to the value with the highest frequency?", options: ["Mean", "Median", "Mode", "Range"], a: 2 },
+        { q: "Which measure divides a distribution such that there are equal numbers of entries above and below it?", options: ["Mean", "Median", "Mode", "Standard Deviation"], a: 1 },
+        { q: "In the formula for Mode of grouped data, what does D1 represent?", options: ["Difference between modal frequency and next frequency", "Difference between modal frequency and previous frequency", "Class size", "Lower class boundary"], a: 1 },
+        { q: "To calculate the median of ungrouped data, the first step is to:", options: ["Sum all values", "Find the most frequent value", "Arrange items in ascending/descending order", "Calculate the range"], a: 2 },
+        { q: "Which average is most affected by extreme values (outliers)?", options: ["Mode", "Median", "Mean", "Quartile"], a: 2 },
+        { q: "If data is 2, 4, 4, 4, 6, what is the mode?", options: ["2", "4", "6", "5"], a: 1 },
+        { q: "In the Median formula, 'fc' represents:", options: ["Frequency of the median class", "Total frequency", "Cumulative frequency before the median class", "Class size"], a: 2 },
+
+        // Section 5: Dispersion 
+        { q: "The difference between the highest and lowest value in a dataset is the:", options: ["Variance", "Standard Deviation", "Range", "Mean Deviation"], a: 2 },
+        { q: "Which measure is the square root of the variance?", options: ["Mean Deviation", "Range", "Standard Deviation", "Coefficient of Variation"], a: 2 },
+        { q: "Mean Deviation is calculated using:", options: ["Squared deviations", "Absolute deviations", "Logarithmic deviations", "Cubic deviations"], a: 1 },
+        { q: "If the variance is 16, what is the standard deviation?", options: ["256", "8", "4", "32"], a: 2 },
+        { q: "Measures of dispersion show:", options: ["The center of the data", "The spread or variability of the data", "The symmetry of the data", "The peak of the data"], a: 1 },
+        { q: "Which is generally considered the most reliable measure of dispersion?", options: ["Range", "Mean Deviation", "Standard Deviation", "Mode"], a: 2 },
+
+        // Section 6: Partition 
+        { q: "Which value divides a distribution into four equal parts?", options: ["Deciles", "Percentiles", "Quartiles", "Median"], a: 2 },
+        { q: "The Second Quartile (Q2) is equivalent to:", options: ["The Mean", "The Mode", "The Median", "The 75th Percentile"], a: 2 },
+        { q: "The 75th Percentile is equivalent to:", options: ["First Quartile (Q1)", "Second Quartile (Q2)", "Third Quartile (Q3)", "Fourth Quartile"], a: 2 },
+        { q: "The 5th Decile (D5) is equivalent to:", options: ["P25", "Q1", "The Median", "P75"], a: 2 },
+        { q: "How many deciles are there in a distribution?", options: ["4", "9", "10", "99"], a: 1 },
+        { q: "The formula L1 + [(N/4 - fc)/f] * C is used to calculate:", options: ["The Median", "The First Quartile", "The Third Quartile", "The Mode"], a: 1 },
+
+        // Section 7: Shape (Skewness/Kurtosis) 
+        { q: "If the bulk of the data is on the left and the right tail is longer, the distribution is:", options: ["Negatively skewed", "Positively skewed", "Symmetric", "Normal"], a: 1 },
+        { q: "If Skewness is less than -0.5, the distribution is:", options: ["Positively skewed", "Negatively skewed", "Symmetric", "Leptokurtic"], a: 1 },
+        { q: "A curve that is more peaked than the normal curve is called:", options: ["Mesokurtic", "Platykurtic", "Leptokurtic", "Asymmetric"], a: 2 },
+        { q: "A curve that is flatter than the normal curve is called:", options: ["Mesokurtic", "Platykurtic", "Leptokurtic", "Exponential"], a: 1 },
+        { q: "The normal curve is also known as:", options: ["Leptokurtic", "Platykurtic", "Mesokurtic", "Skewed"], a: 2 },
+        { q: "If Mean > Median > Mode, the distribution is typically:", options: ["Positively skewed", "Negatively skewed", "Symmetric", "Bimodal"], a: 0 },
+        { q: "In a symmetric distribution, the coefficient of skewness is:", options: ["1", "-1", "0", "0.5"], a: 2 },
+        { q: "Kelly's measure of Kurtosis is based on:", options: ["Standard Deviation", "Percentiles", "Mean", "Mode"], a: 1 },
+
+        // Section 8: Rates and Ratios 
+        { q: "A single number that expresses the relative size of two numbers (e.g., Male:Female) is a:", options: ["Rate", "Ratio", "Index", "Mean"], a: 1 },
+        { q: "The occurrence of events over a specific interval in time (e.g., births per year) is a:", options: ["Ratio", "Rate", "Proportion", "Index Number"], a: 1 },
+        { q: "Crude Birth Rate (CBR) uses which denominator?", options: ["Female population aged 15-49", "Total mid-year population", "Number of married women", "Number of children"], a: 1 },
+        { q: "General Fertility Rate (GFR) is an improvement on CBR because:", options: ["It uses total population", "It uses the male population", "It restricts denominator to women of child-bearing age", "It is easier to calculate"], a: 2 },
+        { q: "Age Specific Fertility Rate (ASFR) measures births per 1000 women in:", options: ["The whole country", "A specific age group", "The labor force", "Universities"], a: 1 },
+        { q: "Which is a 'Vital Rate'?", options: ["Unemployment rate", "Crude Birth Rate", "Interest rate", "Exchange rate"], a: 1 },
+        { q: "If males = 100 and females = 200, the ratio of males to females is:", options: ["1:2", "2:1", "0.5", "50%"], a: 0 },
+
+        // Section 9: Index Numbers (Part 1) 
+        { q: "An index number is a statistical measure of variables with respect to a:", options: ["Base period", "Future period", "Random period", "Mean period"], a: 0 },
+        { q: "The period with which comparisons are made in index numbers is called the:", options: ["Current year", "Base year", "Fiscal year", "Given year"], a: 1 },
+        { q: "A price relative index is defined as:", options: ["(Pn / Po) * 100", "(Po / Pn) * 100", "Pn - Po", "(Pn + Po) / 2"], a: 0 },
+        { q: "If the price index is 120, it means prices have increased by:", options: ["120%", "20%", "1.2%", "12%"], a: 1 },
+        { q: "Which index number method averages the price relatives?", options: ["Simple Aggregate", "Simple Average of Price Relatives", "Laspeyre's", "Paasche's"], a: 1 },
+        { q: "Which is a limitation of Simple Aggregate Price Index?", options: ["It is hard to calculate", "Commodities with large price figures dominate the index", "It uses weights", "It requires too much data"], a: 1 },
+
+        // Section 10: Weighted Index Numbers 
+        { q: "Which index method uses Base Year quantities (qo) as weights?", options: ["Paasche's", "Laspeyre's", "Fisher's", "Marshall-Edgeworth"], a: 1 },
+        { q: "Which index method uses Current/Given Year quantities (qn) as weights?", options: ["Paasche's", "Laspeyre's", "Fisher's", "Simple Aggregate"], a: 0 },
+        { q: "Fisher's Ideal Price Index is the:", options: ["Arithmetic mean of Laspeyre and Paasche", "Geometric mean of Laspeyre and Paasche", "Sum of Laspeyre and Paasche", "Difference between Laspeyre and Paasche"], a: 1 },
+        { q: "Marshall-Edgeworth Index uses which weights?", options: ["Base year quantity only", "Current year quantity only", "The average/total of base and current year quantities", "None"], a: 2 },
+        { q: "Which index is considered 'Ideal' because it satisfies time reversal and factor reversal tests?", options: ["Laspeyre's", "Paasche's", "Fisher's", "Simple Relative"], a: 2 },
+        { q: "If Laspeyre's index is 125 and Paasche's is 120, Fisher's index will be:", options: ["Greater than 125", "Less than 120", "Between 120 and 125", "Zero"], a: 2 },
+        
+        // General / Mixed
+        { q: "Which is NOT a measure of central tendency?", options: ["Mean", "Standard Deviation", "Median", "Mode"], a: 1 },
+        { q: "Which is NOT a measure of dispersion?", options: ["Variance", "Range", "Percentile", "Mean Deviation"], a: 2 },
+        { q: "The value of correlation ranges from:", options: ["0 to 1", "-1 to 1", "0 to 100", "-infinity to +infinity"], a: 1 },
+        { q: "Data presented in rows and columns is called a:", options: ["Graph", "Chart", "Table", "Diagram"], a: 2 },
+        { q: "In a frequency table, the 'tally' column is used for:", options: ["Calculating the mean", "Counting the frequency", "Finding the range", "Drawing the graph"], a: 1 },
+        { q: "A systematic arrangement of numerical data is:", options: ["Statistics", "Data Collection", "Data Presentation", "Interpretation"], a: 2 },
+        { q: "Which variable is qualitative?", options: ["Height", "Weight", "Gender", "Age"], a: 2 },
+        { q: "The formula Σ(x - x̄)² / n represents:", options: ["Mean Deviation", "Standard Deviation", "Variance", "Range"], a: 2 },
+        { q: "If the base year price is #50 and current year is #60, the price relative is:", options: ["110", "120", "83.3", "10"], a: 1 },
+        { q: "Statistical data must be:", options: ["Only estimates", "Numerical", "Only qualitative", "Always perfectly accurate"], a: 1 },
+        { q: "Which graph is used to determine the Mode graphically?", options: ["Ogive", "Frequency Polygon", "Histogram", "Pie Chart"], a: 2 },
+        { q: "Which graph is used to estimate the Median graphically?", options: ["Ogive", "Bar Chart", "Histogram", "Scatterplot"], a: 0 },
+        { q: "The sum of probabilities in an experiment is always:", options: ["0", "1", "100", "Infinite"], a: 1 },
+        { q: "Which is a source of secondary data?", options: ["Personal Interview", "Observation", "Government Publications", "Experiment"], a: 2 }
+    ];
+
+    // --- APP STATE ---
+    let currentQuestionIndex = 0;
+    let score = 0;
+    let shuffledQuestions = [];
+    let userAnswers = []; // Store indices of user selected answers
+    let startTime;
+    let timerInterval;
+
+    // --- DOM ELEMENTS ---
+    const quizScreen = document.getElementById('quiz-screen');
+    const resultScreen = document.getElementById('result-screen');
+    const questionText = document.getElementById('question-text');
+    const optionsList = document.getElementById('options-list');
+    const questionCounter = document.getElementById('question-counter');
+    const btnNext = document.getElementById('btn-next');
+    const btnPrev = document.getElementById('btn-prev');
+    const finalScore = document.getElementById('final-score');
+    const reviewContainer = document.getElementById('review-container');
+    const timerDisplay = document.getElementById('timer');
+
+    // --- FUNCTIONS ---
+
+    // Fisher-Yates Shuffle
+    function shuffle(array) {
+        let currentIndex = array.length, randomIndex;
+        // While there remain elements to shuffle...
+        while (currentIndex != 0) {
+            // Pick a remaining element...
+            randomIndex = Math.floor(Math.random() * currentIndex);
+            currentIndex--;
+            // And swap it with the current element.
+            [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+        }
+        return array;
+    }
+
+    function startQuiz() {
+        // Clone and shuffle questions
+        shuffledQuestions = shuffle([...questionBank]);
+        // Reset state
+        currentQuestionIndex = 0;
+        score = 0;
+        userAnswers = new Array(shuffledQuestions.length).fill(null);
+        
+        // UI Reset
+        quizScreen.style.display = 'block';
+        resultScreen.style.display = 'none';
+        
+        // Timer Reset
+        clearInterval(timerInterval);
+        startTime = new Date();
+        timerInterval = setInterval(updateTimer, 1000);
+
+        loadQuestion();
+    }
+
+    function updateTimer() {
+        const now = new Date();
+        const diff = Math.floor((now - startTime) / 1000);
+        const minutes = Math.floor(diff / 60).toString().padStart(2, '0');
+        const seconds = (diff % 60).toString().padStart(2, '0');
+        timerDisplay.textContent = `Time: ${minutes}:${seconds}`;
+    }
+
+    function loadQuestion() {
+        const qData = shuffledQuestions[currentQuestionIndex];
+        
+        // Update Counter
+        questionCounter.textContent = `Question ${currentQuestionIndex + 1} of ${shuffledQuestions.length}`;
+        
+        // Update Text
+        questionText.textContent = qData.q;
+        
+        // Update Options
+        optionsList.innerHTML = '';
+        qData.options.forEach((opt, index) => {
+            const li = document.createElement('li');
+            li.className = 'option-item';
+            if (userAnswers[currentQuestionIndex] === index) {
+                li.classList.add('selected');
+            }
+            
+            li.innerHTML = `<input type="radio" name="option" value="${index}" ${userAnswers[currentQuestionIndex] === index ? 'checked' : ''}> ${opt}`;
+            
+            li.onclick = () => selectOption(index, li);
+            optionsList.appendChild(li);
+        });
+
+        // Button States
+        btnPrev.disabled = currentQuestionIndex === 0;
+        if (currentQuestionIndex === shuffledQuestions.length - 1) {
+            btnNext.textContent = "Submit Quiz";
+            btnNext.classList.remove('btn-next');
+            btnNext.classList.add('btn-submit');
+        } else {
+            btnNext.textContent = "Next";
+            btnNext.classList.remove('btn-submit');
+            btnNext.classList.add('btn-next');
+        }
+    }
+
+    function selectOption(index, element) {
+        userAnswers[currentQuestionIndex] = index;
+        // Visual update
+        const items = document.querySelectorAll('.option-item');
+        items.forEach(item => item.classList.remove('selected'));
+        element.classList.add('selected');
+        element.querySelector('input').checked = true;
+    }
+
+    function nextQuestion() {
+        if (currentQuestionIndex < shuffledQuestions.length - 1) {
+            currentQuestionIndex++;
+            loadQuestion();
+        } else {
+            finishQuiz();
+        }
+    }
+
+    function prevQuestion() {
+        if (currentQuestionIndex > 0) {
+            currentQuestionIndex--;
+            loadQuestion();
+        }
+    }
+
+    function finishQuiz() {
+        clearInterval(timerInterval);
+        
+        // Calculate Score
+        score = 0;
+        let reviewHTML = '';
+
+        shuffledQuestions.forEach((q, i) => {
+            const userAnswer = userAnswers[i];
+            const isCorrect = userAnswer === q.a;
+            if (isCorrect) score++;
+
+            // Build Review Item
+            reviewHTML += `
+                <div class="review-item">
+                    <div><strong>Q${i+1}:</strong> ${q.q}</div>
+                    <div class="${isCorrect ? 'correct-answer' : 'wrong-answer'}">
+                        Your Answer: ${userAnswer !== null ? q.options[userAnswer] : 'Skipped'}
+                        ${isCorrect ? ' (Correct)' : ''}
+                    </div>
+                    ${!isCorrect ? `<div class="correct-answer">Correct Answer: ${q.options[q.a]}</div>` : ''}
+                </div>
+            `;
+        });
+
+        // Display Results
+        quizScreen.style.display = 'none';
+        resultScreen.style.display = 'block';
+        finalScore.textContent = `${score} / ${shuffledQuestions.length}`;
+        reviewContainer.innerHTML = reviewHTML;
+    }
+
+    function restartQuiz() {
+        startQuiz();
+    }
+
+    // --- INITIALIZATION ---
+    window.onload = startQuiz;
+
+</script>
+
+</body>
+</html>
