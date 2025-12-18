@@ -251,6 +251,61 @@
         // --- QUIZ DATA: 40 Questions Array for COS 101 ---
         const quizQuestions = [
             // --- TOPIC I: COMPUTER FUNDAMENTALS (Q1-Q10) ---
+             {
+                "questionNumber": 6,
+                "question": "The primary function of the **Control Unit (CU)** is to:",
+                "answerOptions": [
+                    {"text": "Interpreting instructions and issuing signals that cause other units to execute them.", "isCorrect": true},
+                    {"text": "Performing arithmetic operations like addition and subtraction.", "rationale": "This is the job of the ALU.", "isCorrect": false},
+                    {"text": "Storing data temporarily for quick access.", "rationale": "This is the job of Registers.", "isCorrect": false},
+                    {"text": "Performing logical comparisons of two numbers.", "rationale": "This is the job of the Logical Unit.", "isCorrect": false}
+                ],
+                "hint": "It acts like a 'police inspector who controls the traffic'."
+            },
+            {
+                "questionNumber": 7,
+                "question": "Which type of computer input includes instructions in the form of **Programs, Commands, and User Response**?",
+                "answerOptions": [
+                    {"text": "Audio", "rationale": "Audio is media data.", "isCorrect": false},
+                    {"text": "Video", "rationale": "Video is media data.", "isCorrect": false},
+                    {"text": "Instructions", "rationale": "Instructions are categorized into Programs, Commands, and User Response.", "isCorrect": true},
+                    {"text": "Graphics and Animations", "rationale": "These are media data.", "isCorrect": false}
+                ],
+                "hint": "These inputs tell the computer *what* to do."
+            },
+            {
+                "questionNumber": 8,
+                "question": "Which of the following best defines **Information** in the context of computing?",
+                "answerOptions": [
+                    {"text": "Raw facts, figures, events, and transactions.", "rationale": "This is the definition of Data.", "isCorrect": false},
+                    {"text": "Any input entered into the computer.", "rationale": "This is the definition of Input.", "isCorrect": false},
+                    {"text": "Meaningful data or processed data.", "rationale": "Information is the output of the processing stage.", "isCorrect": true},
+                    {"text": "An electronic device that takes input and produces output.", "rationale": "This is the definition of a Computer.", "isCorrect": false}
+                ],
+                "hint": "Information is the result of converting data into a usable form."
+            },
+            {
+                "questionNumber": 9,
+                "question": "A **Command** causes a program to perform a specific action, such as using **Ctrl+S** in MS Word. This is an example of what type of computer input?",
+                "answerOptions": [
+                    {"text": "Program", "rationale": "A Program is a set of instructions.", "isCorrect": false},
+                    {"text": "Command", "rationale": "Commands are keyboard shortcuts or text-based instructions.", "isCorrect": true},
+                    {"text": "User Response", "rationale": "A User Response answers a question (Yes/No).", "isCorrect": false},
+                    {"text": "Data", "rationale": "This is not raw data, but an instruction.", "isCorrect": false}
+                ],
+                "hint": "This is one of the three types of 'Instructions' input."
+            },
+            {
+                "questionNumber": 10,
+                "question": "What is the collective term for the physical, tangible parts of the computer system?",
+                "answerOptions": [
+                    {"text": "Hardware", "rationale": "Hardware includes devices like the keyboard, monitor, and CPU.", "isCorrect": true},
+                    {"text": "Software", "rationale": "Software is non-tangible instructions.", "isCorrect": false},
+                    {"text": "Data", "rationale": "Data is raw facts.", "isCorrect": false},
+                    {"text": "Information", "rationale": "Information is processed data.", "isCorrect": false}
+                ],
+                "hint": "The components you can physically interact with."
+            },
             {
                 "questionNumber": 1,
                 "question": "What is the final step in the Information Processing Cycle, which involves saving the results for future use?",
@@ -306,61 +361,7 @@
                 ],
                 "hint": "The name of the unit refers to the type of operation it performs."
             },
-            {
-                "questionNumber": 6,
-                "question": "The primary function of the **Control Unit (CU)** is to:",
-                "answerOptions": [
-                    {"text": "Interpreting instructions and issuing signals that cause other units to execute them.", "isCorrect": true},
-                    {"text": "Performing arithmetic operations like addition and subtraction.", "rationale": "This is the job of the ALU.", "isCorrect": false},
-                    {"text": "Storing data temporarily for quick access.", "rationale": "This is the job of Registers.", "isCorrect": false},
-                    {"text": "Performing logical comparisons of two numbers.", "rationale": "This is the job of the Logical Unit.", "isCorrect": false}
-                ],
-                "hint": "It acts like a 'police inspector who controls the traffic'."
-            },
-            {
-                "questionNumber": 7,
-                "question": "Which type of computer input includes instructions in the form of **Programs, Commands, and User Response**?",
-                "answerOptions": [
-                    {"text": "Audio", "rationale": "Audio is media data.", "isCorrect": false},
-                    {"text": "Video", "rationale": "Video is media data.", "isCorrect": false},
-                    {"text": "Instructions", "rationale": "Instructions are categorized into Programs, Commands, and User Response.", "isCorrect": true},
-                    {"text": "Graphics and Animations", "rationale": "These are media data.", "isCorrect": false}
-                ],
-                "hint": "These inputs tell the computer *what* to do."
-            },
-            {
-                "questionNumber": 8,
-                "question": "Which of the following best defines **Information** in the context of computing?",
-                "answerOptions": [
-                    {"text": "Raw facts, figures, events, and transactions.", "rationale": "This is the definition of Data.", "isCorrect": false},
-                    {"text": "Any input entered into the computer.", "rationale": "This is the definition of Input.", "isCorrect": false},
-                    {"text": "Meaningful data or processed data.", "rationale": "Information is the output of the processing stage.", "isCorrect": true},
-                    {"text": "An electronic device that takes input and produces output.", "rationale": "This is the definition of a Computer.", "isCorrect": false}
-                ],
-                "hint": "Information is the result of converting data into a usable form."
-            },
-            {
-                "questionNumber": 9,
-                "question": "A **Command** causes a program to perform a specific action, such as using **Ctrl+S** in MS Word. This is an example of what type of computer input?",
-                "answerOptions": [
-                    {"text": "Program", "rationale": "A Program is a set of instructions.", "isCorrect": false},
-                    {"text": "Command", "rationale": "Commands are keyboard shortcuts or text-based instructions.", "isCorrect": true},
-                    {"text": "User Response", "rationale": "A User Response answers a question (Yes/No).", "isCorrect": false},
-                    {"text": "Data", "rationale": "This is not raw data, but an instruction.", "isCorrect": false}
-                ],
-                "hint": "This is one of the three types of 'Instructions' input."
-            },
-            {
-                "questionNumber": 10,
-                "question": "What is the collective term for the physical, tangible parts of the computer system?",
-                "answerOptions": [
-                    {"text": "Hardware", "rationale": "Hardware includes devices like the keyboard, monitor, and CPU.", "isCorrect": true},
-                    {"text": "Software", "rationale": "Software is non-tangible instructions.", "isCorrect": false},
-                    {"text": "Data", "rationale": "Data is raw facts.", "isCorrect": false},
-                    {"text": "Information", "rationale": "Information is processed data.", "isCorrect": false}
-                ],
-                "hint": "The components you can physically interact with."
-            },
+           
 
             // --- TOPIC II: COMPONENTS & MEMORY (Q11-Q20) ---
             {

@@ -3,61 +3,6 @@
         const quizQuestions = [
             // --- TOPIC 1: ELEMENTARY SET THEORY (Q1-Q10) ---
             {
-                "questionNumber": 1,
-                "question": "If A and B are two non-empty sets, the set of all elements that are in A or in B is called the:",
-                "answerOptions": [
-                    {"text": "Intersection of A and B", "rationale": "Intersection contains elements common to both sets.", "isCorrect": false},
-                    {"text": "Difference of A and B", "rationale": "Difference contains elements in A but not in B.", "isCorrect": false},
-                    {"text": "Union of A and B (A &cup; B)", "rationale": "The union contains all elements belonging to either set A or set B or both.", "isCorrect": true},
-                    {"text": "Complement of A", "rationale": "The complement contains elements not in A.", "isCorrect": false}
-                ],
-                "hint": "Think of combining all elements into one large set."
-            },
-            {
-                "questionNumber": 2,
-                "question": "The total number of unique subsets that can be formed from a finite set with n elements is given by:",
-                "answerOptions": [
-                    {"text": "n^2", "rationale": "This represents the number of ordered pairs.", "isCorrect": false},
-                    {"text": "2^n", "rationale": "Each of the n elements can either be in or out of a subset, giving 2 times 2 times ldots     = times 2 = 2^n possibilities.", "isCorrect": true},
-                    {"text": "n!", "rationale": "This represents the number of permutations (orderings) of n elements.", "isCorrect": false},
-                    {"text": "n+1", "rationale": "This is incorrect.", "isCorrect": false}
-                ],
-                "hint": "Consider the size of the Power Set."
-            },
-            {
-                "questionNumber": 3,
-                "question": "Given sets A = \{1, 2, 3\} and B = \{3, 4, 5\}, then the intersection A \cap B is:",
-                "answerOptions": [
-                    {"text": "\{1, 2, 3, 4, 5\}", "rationale": "This is the union.", "isCorrect": false},
-                    {"text": "\emptyset", "rationale": "The sets are not disjoint, as they share an element.", "isCorrect": false},
-                    {"text": "\{3\}", "rationale": "The intersection contains only the elements common to both sets, which is 3.", "isCorrect": true},
-                    {"text": "\{1, 2, 4, 5\}", "rationale": "This is the symmetric difference.", "isCorrect": false}
-                ],
-                "hint": "Intersection means 'in both A AND B'."
-            },
-            {
-                "questionNumber": 4,
-                "question": "If U is the universal set and A is any subset, what is the complement of the complement of A, i.e., (A')'?",
-                "answerOptions": [
-                    {"text": "U", "rationale": "The complement of the complement of a set is the set itself.", "isCorrect": false},
-                    {"text": "\emptyset", "rationale": "The complement of the complement of a set is the set itself.", "isCorrect": false},
-                    {"text": "A", "rationale": "The complement of the complement of a set is the set itself.", "isCorrect": true},
-                    {"text": "A'", "rationale": "The complement of the complement of a set is the set itself.", "isCorrect": false}
-                ],
-                "hint": "The operation returns the set to its original state."
-            },
-            {
-                "questionNumber": 5,
-                "question": "De Morgan's First Law for sets A and B states that (A \cup B)' is equal to:",
-                "answerOptions": [
-                    {"text": "A' \cup B'", "rationale": "This is incorrect, it would be the union of the complements.", "isCorrect": false},
-                    {"text": "(A \cap B)'", "rationale": "This is the complement of the intersection.", "isCorrect": false},
-                    {"text": "A' \cap B'", "rationale": "The complement of a union is the intersection of the complements.", "isCorrect": true},
-                    {"text": "A \cap B", "rationale": "This is the intersection.", "isCorrect": false}
-                ],
-                "hint": "The 'bar' (complement) breaks the union and changes it to an intersection."
-            },
-            {
                 "questionNumber": 6,
                 "question": "If set A has 3 elements and set B has 2 elements, the number of elements in the Cartesian Product A \times B is:",
                 "answerOptions": [
@@ -112,6 +57,62 @@
                 ],
                 "hint": "It represents the elements unique to set A."
             },
+            {
+                "questionNumber": 1,
+                "question": "If A and B are two non-empty sets, the set of all elements that are in A or in B is called the:",
+                "answerOptions": [
+                    {"text": "Intersection of A and B", "rationale": "Intersection contains elements common to both sets.", "isCorrect": false},
+                    {"text": "Difference of A and B", "rationale": "Difference contains elements in A but not in B.", "isCorrect": false},
+                    {"text": "Union of A and B (A &cup; B)", "rationale": "The union contains all elements belonging to either set A or set B or both.", "isCorrect": true},
+                    {"text": "Complement of A", "rationale": "The complement contains elements not in A.", "isCorrect": false}
+                ],
+                "hint": "Think of combining all elements into one large set."
+            },
+            {
+                "questionNumber": 2,
+                "question": "The total number of unique subsets that can be formed from a finite set with n elements is given by:",
+                "answerOptions": [
+                    {"text": "n^2", "rationale": "This represents the number of ordered pairs.", "isCorrect": false},
+                    {"text": "2^n", "rationale": "Each of the n elements can either be in or out of a subset, giving 2 times 2 times ldots     = times 2 = 2^n possibilities.", "isCorrect": true},
+                    {"text": "n!", "rationale": "This represents the number of permutations (orderings) of n elements.", "isCorrect": false},
+                    {"text": "n+1", "rationale": "This is incorrect.", "isCorrect": false}
+                ],
+                "hint": "Consider the size of the Power Set."
+            },
+            {
+                "questionNumber": 3,
+                "question": "Given sets A = \{1, 2, 3\} and B = \{3, 4, 5\}, then the intersection A \cap B is:",
+                "answerOptions": [
+                    {"text": "\{1, 2, 3, 4, 5\}", "rationale": "This is the union.", "isCorrect": false},
+                    {"text": "\emptyset", "rationale": "The sets are not disjoint, as they share an element.", "isCorrect": false},
+                    {"text": "\{3\}", "rationale": "The intersection contains only the elements common to both sets, which is 3.", "isCorrect": true},
+                    {"text": "\{1, 2, 4, 5\}", "rationale": "This is the symmetric difference.", "isCorrect": false}
+                ],
+                "hint": "Intersection means 'in both A AND B'."
+            },
+            {
+                "questionNumber": 4,
+                "question": "If U is the universal set and A is any subset, what is the complement of the complement of A, i.e., (A')'?",
+                "answerOptions": [
+                    {"text": "U", "rationale": "The complement of the complement of a set is the set itself.", "isCorrect": false},
+                    {"text": "\emptyset", "rationale": "The complement of the complement of a set is the set itself.", "isCorrect": false},
+                    {"text": "A", "rationale": "The complement of the complement of a set is the set itself.", "isCorrect": true},
+                    {"text": "A'", "rationale": "The complement of the complement of a set is the set itself.", "isCorrect": false}
+                ],
+                "hint": "The operation returns the set to its original state."
+            },
+            {
+                "questionNumber": 5,
+                "question": "De Morgan's First Law for sets A and B states that (A \cup B)' is equal to:",
+                "answerOptions": [
+                    {"text": "A' \cup B'", "rationale": "This is incorrect, it would be the union of the complements.", "isCorrect": false},
+                    {"text": "(A \cap B)'", "rationale": "This is the complement of the intersection.", "isCorrect": false},
+                    {"text": "A' \cap B'", "rationale": "The complement of a union is the intersection of the complements.", "isCorrect": true},
+                    {"text": "A \cap B", "rationale": "This is the intersection.", "isCorrect": false}
+                ],
+                "hint": "The 'bar' (complement) breaks the union and changes it to an intersection."
+            },
+            
 
             // --- TOPIC 2: REAL NUMBERS AND MATHEMATICAL INDUCTION (Q11-Q20) ---
             {
